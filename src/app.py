@@ -1,16 +1,18 @@
 from flask import Flask,render_template,request,make_response
-from src.models.user import User
-from src.models.blog import Blog
-from src.models.post import Post
-from src.common.database import Database
+from models.user import User
+from models.blog import Blog
+from models.post import Post
+from common.database import Database
 from flask import sessions,session
+
+
 app = Flask(__name__)
 app.secret_key="av"
 
 
 @app.route('/')
 def home_template():
-    return  render_template('login.html')
+    return  render_template('base.html')
 
 @app.route("/login")
 def login_template():
@@ -28,10 +30,12 @@ def  initialize_database():
 
 @app.route('/auth/login', methods=['POST'])
 def login_user():
-    email = request.form['eamil']
+    email = request.form['email']
     password = request.form['password']
+
     if User.login_valid(email, password):
         User.login(email)
+
     else:
         session['email'] = None
     return render_template("profile.html", email=session['email'])
@@ -54,7 +58,6 @@ def user_blogs(user_id=None):
         user = User.get_by_id(user_id)
     else:
         user = User.get_by_email(session['email'])
-
     blogs = user.get_blogs()
     return render_template('user_blogs.html',blogs=blogs, email=user.email)
 
@@ -82,10 +85,10 @@ def blog_posts(blog_id):
 @app.route('/posts/new/<string:blog_id>', methods=['POST', 'GET'])
 def create_new_post(blog_id):
     if request.method == 'GET':
-        return  render_template('new_post.html')
+        return  render_template('new_post.html', blog_id=blog_id)
     else:
         title = request.form['title']
-        description = request.form['content']
+        content = request.form['content']
         user = User.get_by_email(session['email'])
         new_post = Post(blog_id, title, content, user.email)
         new_post.save_to_mongo()
@@ -93,5 +96,4 @@ def create_new_post(blog_id):
 
 
 if __name__=='__main__':
-    app.run(port=4995, debug=True)
-
+    app.run(port=8000, debug=True)

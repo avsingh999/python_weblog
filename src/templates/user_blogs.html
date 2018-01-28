@@ -1,13 +1,14 @@
 
-{% extends "base.html" %}
+{% extends "profile.html" %}
 {% block content %}
 <div class="container">
 	<h2>blogs of {{ email }}'s bloga</h2>
+	<h2>welcome to your blogs</h2>
 	{% for blog in blogs %}
-		<h3><a href="/posts/{{ blog._id }}"></a>{{ blog.title }}</h3>
+		<h3><a href="/posts/{{ blog._id }}"{{ blog.title }}</h3>
 		<p>{{ blog.description }}</p>
 		<hr>
 	{% endfor %}
 </div>
-    
+
 {% endblock %}

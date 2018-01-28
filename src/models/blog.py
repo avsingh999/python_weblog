@@ -1,8 +1,8 @@
 import uuid
 import datetime
 from flask import session
-from src.models.post import Post
-from src.common.database import Database
+from models.post import Post
+from common.database import Database
 
 class Blog(object):
     def __init__(self,author, title, description, author_id, _id=None):

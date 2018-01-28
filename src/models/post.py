@@ -1,5 +1,5 @@
 import uuid
-from src.common.database import Database
+from common.database import Database
 import datetime
 from flask import session
 # from datetime import datetime

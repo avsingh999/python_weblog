@@ -1,11 +1,11 @@
-from src.models.blog import Blog
-from src.models.post import Post
+from models.blog import Blog
+from models.post import Post
 import datetime
 import uuid
 from flask import session,sessions
 # from datetime import datetime
 
-from src.common.database import Database
+from common.database import Database
 
 class User(object):
     def __init__(self, email, password, _id=None):
