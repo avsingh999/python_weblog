@@ -24,6 +24,11 @@ def login_template():
 def  register_template():
     return render_template('register.html')
 
+@app.route('/logout')
+def  logout_template():
+    session['email'] = None
+    return render_template('login.html')
+
 @app.before_first_request
 def  initialize_database():
     Database.initialize()
